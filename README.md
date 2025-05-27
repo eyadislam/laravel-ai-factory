@@ -1,3 +1,4 @@
+
 # Laravel AI Factory
 
 Laravel AI Factory is a developer-friendly package for generating realistic test data using AI models like OpenAI, Gemini, or DeepSeek. It integrates seamlessly with Laravel factories and supports both AI-generated and manually defined fields, with the option to use bulk or individual inserts.
@@ -14,5 +15,96 @@ Laravel AI Factory is a developer-friendly package for generating realistic test
 
 ```bash
 composer require your-vendor/laravel-ai-factory
-
 ```
+
+## ⚙️ Configuration
+
+Publish the config:
+```bash
+php artisan vendor:publish --tag=ai-factory-config
+```
+Update your `.env` with the appropriate API keys:
+```ini
+AI_FACTORY_DRIVER=openai
+AI_FACTORY_OPENAI_API_KEY=your-api-key
+AI_FACTORY_OPENAI_MODEL=gpt-4
+```
+
+## 🧠 Defining AI Fields
+
+In your factory, use the `AIFactoryTrait` and define the `aiFields()` method:
+```php
+<?php
+use YourVendor\AIFactory\Traits\AIFactoryTrait;
+
+class UserFactory extends Factory
+{
+    use AIFactoryTrait;
+
+    protected $model = \App\Models\User::class;
+
+    public function aiFields(): array
+    {
+        return [
+            'name' => 'Generate a realistic full name',
+            'email' => fn () => fake()->unique()->safeEmail(),
+            'password' => fn () => bcrypt('password'),
+            'api_token' => fn () => Str::random(60),
+        ];
+    }
+}
+```
+-   Use a **string** for AI-generated fields (prompt).  
+-   Use a **callable** for manual or faker-based fields.
+
+## 🛠 Usage
+
+### Basic Usage
+```php
+User::factory()->count(5)->createWithAI();
+```
+
+### Override Fields
+```php
+User::factory()->count(3)->createWithAI([
+    'email' => fn () => fake()->unique()->safeEmail(),
+    'role' => fn () => 'admin'
+]);
+```
+
+### Bulk Insert (faster, skips model events)
+```php
+User::factory()->count(1000)->createWithAI([], true);
+```
+
+## 🧪 Example Prompt
+```php
+[
+    'title' => 'Generate a blog post title related to technology',
+    'content' => 'Generate a paragraph of blog content about AI',
+    'published_at' => fn () => now()->subDays(rand(1, 30)),
+]
+```
+
+## 📂 Config File
+
+```php
+return [
+    'driver' => env('AI_FACTORY_DRIVER', 'openai'),
+
+    'openai' => [
+        'api_key' => env('AI_FACTORY_OPENAI_API_KEY'),
+        'model' => env('AI_FACTORY_OPENAI_MODEL', 'gpt-4'),
+    ]
+];
+```
+
+## 🛡 Error Handling
+
+-   AI data generation is wrapped in try/catch.
+-   Model creation errors are logged individually.
+-   Invalid JSON or failed API calls will throw descriptive exceptions.
+
+## 📄 License
+
+This package is open-sourced software licensed under the MIT license.

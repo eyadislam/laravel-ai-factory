@@ -32,7 +32,7 @@ AI_FACTORY_OPENAI_MODEL=gpt-4o-mini
 
 ## 🧠 Defining AI Fields
 
-In your factory, use the `HasAIFactory` and define the `aiFields()` method:
+In your factory, use the `HasAIFactory` trait and define the `aiFields()` method:
 ```php
 <?php
 use FlorianDomgjoni\AIFactory\Concerns\HasAIFactory;
@@ -57,7 +57,7 @@ class UserFactory extends Factory
 -   Use a **string** for AI-generated fields (prompt).  
 -   Use a **callable** for manual or faker-based fields.
 
-You also need to define defiende the model class inside the factory. It is required in order to function properly.
+You also need to fill the $model property with the model class inside the factory. It is required in order to function properly.
 
 ## 🛠 Usage
 

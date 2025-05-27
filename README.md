@@ -27,7 +27,7 @@ Update your `.env` with the appropriate API keys:
 ```ini
 AI_FACTORY_DRIVER=openai
 AI_FACTORY_OPENAI_API_KEY=your-api-key
-AI_FACTORY_OPENAI_MODEL=gpt-4
+AI_FACTORY_OPENAI_MODEL=gpt-4o-mini
 ```
 
 ## 🧠 Defining AI Fields

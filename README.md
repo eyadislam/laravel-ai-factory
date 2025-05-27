@@ -1,7 +1,7 @@
 
 # Laravel AI Factory
 
-Laravel AI Factory is a developer-friendly package for generating realistic test data using AI models like OpenAI, Gemini, or DeepSeek. It integrates seamlessly with Laravel factories and supports both AI-generated and manually defined fields, with the option to use bulk or individual inserts.
+Laravel AI Factory is a developer-friendly package for generating realistic test data using AI models like OpenAI (Gemini and DeepSeek coming soon). It integrates seamlessly with Laravel factories and supports both AI-generated and manually defined fields, with the option to use bulk or individual inserts.
 
 ## 🚀 Features
 

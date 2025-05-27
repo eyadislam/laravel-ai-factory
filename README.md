@@ -32,14 +32,14 @@ AI_FACTORY_OPENAI_MODEL=gpt-4o-mini
 
 ## 🧠 Defining AI Fields
 
-In your factory, use the `AIFactoryTrait` and define the `aiFields()` method:
+In your factory, use the `HasAIFactory` and define the `aiFields()` method:
 ```php
 <?php
-use YourVendor\AIFactory\Traits\AIFactoryTrait;
+use FlorianDomgjoni\AIFactory\Concerns\HasAIFactory;
 
 class UserFactory extends Factory
 {
-    use AIFactoryTrait;
+    use HasAIFactory;
 
     protected $model = \App\Models\User::class;
 

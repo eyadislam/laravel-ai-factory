@@ -14,7 +14,7 @@ Laravel AI Factory is a developer-friendly package for generating realistic test
 ## 📦 Installation
 
 ```bash
-composer require your-vendor/laravel-ai-factory
+composer require floriandomgjoni/laravel-ai-factory
 ```
 
 ## ⚙️ Configuration

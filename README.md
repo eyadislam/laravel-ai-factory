@@ -94,7 +94,7 @@ return [
 
     'openai' => [
         'api_key' => env('AI_FACTORY_OPENAI_API_KEY'),
-        'model' => env('AI_FACTORY_OPENAI_MODEL', 'gpt-4'),
+        'model' => env('AI_FACTORY_OPENAI_MODEL', 'gpt-4o-mini'),
     ]
 ];
 ```

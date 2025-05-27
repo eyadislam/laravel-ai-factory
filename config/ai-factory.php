@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'driver' => env('FACTORY_AI_DRIVER', 'openai'),
+    'driver' => env('AI_FACTORY_DRIVER', 'openai'),
 
     'defaults' => [
         // Optional per-model driver override
@@ -9,17 +9,7 @@ return [
     ],
 
     'openai' => [
-        'api_key' => env('OPENAI_API_KEY'),
-        'model' => 'gpt-4o-mini',
-    ],
-
-    'gemini' => [
-        'api_key' => env('GEMINI_API_KEY'),
-        'model' => 'gemini-pro',
-    ],
-
-    'deepseek' => [
-        'api_key' => env('DEEPSEEK_API_KEY'),
-        'model' => 'deepseek-chat',
-    ],
+        'api_key' => env('AI_FACTORY_OPENAI_API_KEY'),
+        'model' => env('AI_FACTORY_OPENAI_MODEL', 'gpt-4o-mini'),
+    ]
 ];

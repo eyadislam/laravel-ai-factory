@@ -57,6 +57,8 @@ class UserFactory extends Factory
 -   Use a **string** for AI-generated fields (prompt).  
 -   Use a **callable** for manual or faker-based fields.
 
+You also need to define defiende the model class inside the factory. It is required in order to function properly.
+
 ## 🛠 Usage
 
 ### Basic Usage

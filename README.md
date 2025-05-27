@@ -76,7 +76,7 @@ User::factory()->count(3)->createWithAI([
 
 ### Bulk Insert (faster, skips model events)
 ```php
-User::factory()->count(1000)->createWithAI([], true);
+User::factory()->count(100)->createWithAI([], true);
 ```
 
 ## 🧪 Example Prompt

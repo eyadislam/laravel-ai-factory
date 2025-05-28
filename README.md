@@ -30,6 +30,14 @@ AI_FACTORY_OPENAI_API_KEY=your-api-key
 AI_FACTORY_OPENAI_MODEL=gpt-4o-mini
 ```
 
+or, for a local LLM:
+```ini
+AI_FACTORY_DRIVER=local
+AI_FACTORY_LOCAL_URL=http://localhost:8080/v1/chat/completions
+AI_FACTORY_LOCAL_API_KEY=""
+AI_FACTORY_LOCAL_MODEL=Default
+```
+
 ## 🧠 Defining AI Fields
 
 In your factory, use the `HasAIFactory` trait and define the `aiFields()` method:
@@ -97,7 +105,13 @@ return [
     'openai' => [
         'api_key' => env('AI_FACTORY_OPENAI_API_KEY'),
         'model' => env('AI_FACTORY_OPENAI_MODEL', 'gpt-4o-mini'),
-    ]
+    ],
+
+    'local' => [
+        'url' => env('AI_FACTORY_LOCAL_URL', 'http://localhost:8080'),
+        'api_key' => env('AI_FACTORY_LOCAL_API_KEY', null),
+        'model' => env('AI_FACTORY_LOCAL_MODEL', null),
+    ],
 ];
 ```
 

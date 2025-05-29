@@ -6,6 +6,7 @@ namespace FlorianDomgjoni\AIFactory;
 
 use FlorianDomgjoni\AIFactory\Contracts\AIProviderInterface;
 use FlorianDomgjoni\AIFactory\Drivers\OpenAIProvider;
+use FlorianDomgjoni\AIFactory\Drivers\LocalProvider;
 
 class AIFactory
 {
@@ -19,6 +20,7 @@ class AIFactory
 
         $this->drivers = [
             'openai' => new OpenAIProvider,
+            'local' => new LocalProvider,
         ];
     }
 

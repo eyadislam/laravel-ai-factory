@@ -11,7 +11,7 @@ trait HasAIFactory
     {
         $count = $this->count ?? 1;
 
-        if (!$this->model) {
+        if (! $this->model) {
             throw new \Exception('You must define a $model property in your factory.');
         }
 

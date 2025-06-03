@@ -5,8 +5,8 @@ namespace FlorianDomgjoni\AIFactory;
 // use YourVendor\FactoryAI\Drivers\OpenAIProvider;
 
 use FlorianDomgjoni\AIFactory\Contracts\AIProviderInterface;
-use FlorianDomgjoni\AIFactory\Drivers\OpenAIProvider;
 use FlorianDomgjoni\AIFactory\Drivers\LocalProvider;
+use FlorianDomgjoni\AIFactory\Drivers\OpenAIProvider;
 
 class AIFactory
 {

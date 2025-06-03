@@ -4,7 +4,6 @@ namespace FlorianDomgjoni\AIFactory\Drivers;
 
 use FlorianDomgjoni\AIFactory\Contracts\AIProviderInterface;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class OpenAIProvider implements AIProviderInterface
 {
@@ -20,8 +19,8 @@ class OpenAIProvider implements AIProviderInterface
                 ],
             ]);
 
-        if (!$response->ok()) {
-            throw new \RuntimeException('[AI Factory] AI response failed with message: ' . $response->body() . ' and code ' . $response->status());
+        if (! $response->ok()) {
+            throw new \RuntimeException('[AI Factory] AI response failed with message: '.$response->body().' and code '.$response->status());
         }
 
         $content = $response->json('choices.0.message.content');
@@ -35,7 +34,7 @@ class OpenAIProvider implements AIProviderInterface
     protected function buildPrompt(array $fields, int $count): string
     {
         $fieldList = collect($fields)
-            ->map(fn($desc, $field) => "- `$field`: $desc")
+            ->map(fn ($desc, $field) => "- `$field`: $desc")
             ->implode("\n");
 
         return <<<PROMPT

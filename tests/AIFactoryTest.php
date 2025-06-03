@@ -12,8 +12,10 @@ uses(RefreshDatabase::class);
 
 it('throws an exception when ai fields are not defined', function () {
     try {
-        $factory = new class extends Factory {
+        $factory = new class extends Factory
+        {
             use HasAIFactory;
+
             protected $model = Dummy::class;
 
             public function definition()
@@ -55,10 +57,10 @@ it('can create records with AI-generated fields', function () {
         'https://api.openai.com/*' => Http::response([
             'choices' => [[
                 'message' => [
-                    'content' => '```json' . json_encode([
+                    'content' => '```json'.json_encode([
                         ['name' => 'Jane Doe', 'email' => 'jane@example.com'],
                         ['name' => 'John Smith', 'email' => 'john2@example.com'],
-                    ]) . '```',
+                    ]).'```',
                 ],
             ]],
         ], 200),
@@ -84,7 +86,8 @@ it('throws an exception when api response is invalid', function () {
 
 it('throws an exception when model is not defined', function () {
     try {
-        $factory = new class extends Factory {
+        $factory = new class extends Factory
+        {
             use HasAIFactory;
 
             public function definition()

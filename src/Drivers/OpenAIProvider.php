@@ -4,6 +4,7 @@ namespace FlorianDomgjoni\AIFactory\Drivers;
 
 use FlorianDomgjoni\AIFactory\Contracts\AIProviderInterface;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OpenAIProvider implements AIProviderInterface
 {
@@ -19,18 +20,22 @@ class OpenAIProvider implements AIProviderInterface
                 ],
             ]);
 
+        if (!$response->ok()) {
+            throw new \RuntimeException('[AI Factory] AI response failed with message: ' . $response->body() . ' and code ' . $response->status());
+        }
+
         $content = $response->json('choices.0.message.content');
 
         // Clean up formatting
         $cleaned = preg_replace('/^```(?:json)?|```$/m', '', trim($content));
 
-        return json_decode($cleaned, true) ?? throw new \RuntimeException('Invalid AI response: JSON decoding failed');
+        return json_decode($cleaned, true) ?? throw new \RuntimeException('[AI Factory] Invalid AI response: JSON decoding failed');
     }
 
     protected function buildPrompt(array $fields, int $count): string
     {
         $fieldList = collect($fields)
-            ->map(fn ($desc, $field) => "- `$field`: $desc")
+            ->map(fn($desc, $field) => "- `$field`: $desc")
             ->implode("\n");
 
         return <<<PROMPT

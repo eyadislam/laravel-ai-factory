@@ -13,7 +13,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
         Factory::guessFactoryNamesUsing(
-            fn (string $modelName) => 'fdomgjoni99\\AIFactory\\Database\\Factories\\'.class_basename($modelName).'Factory'
+            fn(string $modelName) => 'fdomgjoni99\\AIFactory\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
         );
     }
 
@@ -28,10 +28,8 @@ class TestCase extends Orchestra
     {
         config()->set('database.default', 'testing');
 
-        /*
-         foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
+        foreach (\Illuminate\Support\Facades\File::allFiles(__DIR__ . '/database/migrations') as $migration) {
             (include $migration->getRealPath())->up();
-         }
-         */
+        }
     }
 }

